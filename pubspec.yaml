@@ -1,0 +1,38 @@
+name: alepha_digital_tracking
+description: "A new Flutter project with OpenStreetMap integration."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # flutter_map: ^3.1.0
+  flutter_map_cancellable_tile_provider: ^3.0.2
+  geolocator: ^13.0.1
+  geocoding: ^3.0.0
+  http: ^1.2.2 
+  intl_phone_field: ^3.0.0
+  smooth_page_indicator: ^1.2.0+3
+  shared_preferences: ^2.3.2
+  curved_navigation_bar: ^1.0.6
+  permission_handler: ^11.3.1
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  # flutter_mapbox_navigation: ^0.2.2
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_map_cancellable_tile_provider: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - asset/onboarding/
+    - asset/auth/

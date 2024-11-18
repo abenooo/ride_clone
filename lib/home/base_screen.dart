@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'car_screen.dart';
 import 'notifications_screen.dart';
-import 'home_work_screen.dart';
-import 'list_screen.dart';
+import 'chat_screen.dart';
 import 'profile_screen.dart';
+import 'location_screen.dart';
+import 'wallet_screen.dart';
 
 class BaseScreen extends StatelessWidget {
   final Widget body;
@@ -24,12 +24,12 @@ class BaseScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white, // Set a background color to avoid the red screen
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        centerTitle: false,
-        backgroundColor: Colors.green, // Match the navigation bar color
-        elevation: 0, // Remove shadow
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Dashboard'),
+      //   centerTitle: false,
+      //   backgroundColor: Colors.green, // Match the navigation bar color
+      //   elevation: 0, // Remove shadow
+      // ),
       drawer: _buildDrawer(context),
       body: Container(
         height: screenHeight,
@@ -94,8 +94,8 @@ class BaseScreen extends StatelessWidget {
         height: 60.0,
         items: const [
           Icon(Icons.directions_car, size: 30),
+          Icon(Icons.map, size: 30),
           Icon(Icons.chat, size: 30),
-          Icon(Icons.home, size: 30),
           Icon(Icons.notifications, size: 30),
           Icon(Icons.person, size: 30),
         ],
@@ -113,7 +113,7 @@ class BaseScreen extends StatelessWidget {
               screen = const CarScreen();
               break;
             case 1:
-              screen = const ListScreen();
+              screen = const LocationScreen();
               break;
             case 2:
               screen = const HomeWorkScreen();

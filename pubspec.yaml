@@ -24,6 +24,7 @@ dependencies:
   flutter_map: ^7.0.2
   latlong2: ^0.9.1
   # flutter_mapbox_navigation: ^0.2.2
+  flutter_svg: ^1.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -36,3 +37,4 @@ flutter:
   assets:
     - asset/onboarding/
     - asset/auth/
+    - asset/language/

@@ -1,11 +1,10 @@
-import '/home/location_screen.dart';
-import '/home/notifications_screen.dart';
-
-import '/home/home_work_screen.dart';
-import '/home/profile_screen.dart';
-import '/home/list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import '../home/wallet_screen.dart';
+import '../home/location_screen.dart';
+import '../home/chat_screen.dart';
+import '../home/notifications_screen.dart';
+import '../home/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,12 +16,28 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
+  final List<Widget> _screens = [
+    const CarScreen(),
+    const LocationScreen(),
+    const HomeWorkScreen(),
+    const NotificationScreen(),
+    const ProfileScreen(),
+  ];
+
+  final List<String> _titles = [
+    'Car Screen',
+    'Location Screen',
+    'Home Work Screen',
+    'Notifications',
+    'Profile',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: Text(_titles[_currentIndex]),
         centerTitle: false,
         backgroundColor: Colors.green,
         elevation: 0,
@@ -37,13 +52,12 @@ class _HomeScreenState extends State<HomeScreen> {
               currentAccountPicture: CircleAvatar(
                 foregroundImage: AssetImage('asset/auth/profile.jpg'),
               ),
-              decoration: BoxDecoration(
-                color: Colors.green,
-              ),
+              decoration: BoxDecoration(color: Colors.green),
             ),
-            _buildDrawerItem(Icons.home, 'Dashboard'),
-            _buildDrawerItem(Icons.history, 'Trip History'),
-            _buildDrawerItem(Icons.payment, 'Payments'),
+            _buildDrawerItem(Icons.history, 'History'),
+            _buildDrawerItem(Icons.report, 'Complain'),
+            _buildDrawerItem(Icons.share, 'Referral'),
+            _buildDrawerItem(Icons.payment, 'Payment'),
             const Padding(
               padding: EdgeInsets.all(14.0),
               child: Text(
@@ -52,27 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             _buildDrawerItem(Icons.settings, 'Profile Settings'),
-            _buildDrawerItem(Icons.support, 'Support'),
+            _buildDrawerItem(Icons.support, 'Help and Support'),
             _buildDrawerItem(Icons.logout, 'Logout'),
           ],
         ),
       ),
-      body: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 75.0),
-          child: Center(
-            child: _buildCurrentScreen(),
-          ),
-        ),
-      ),
+      body: _screens[_currentIndex], // Dynamically load the selected screen
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
         shape: const CircleBorder(),
-        tooltip: 'Add',
+        tooltip: 'Chat',
         elevation: 2.0,
         child: const Icon(Icons.chat),
       ),
@@ -86,9 +92,9 @@ class _HomeScreenState extends State<HomeScreen> {
         animationDuration: const Duration(milliseconds: 300),
         animationCurve: Curves.easeInOutCubic,
         items: const <Widget>[
-          Icon(Icons.directions_car, size: 30, color: Colors.white),
+          Icon(Icons.wallet, size: 30, color: Colors.white),
+          Icon(Icons.map, size: 30, color: Colors.white),
           Icon(Icons.chat, size: 30, color: Colors.white),
-          Icon(Icons.home_work, size: 30, color: Colors.white),
           Icon(Icons.notifications, size: 30, color: Colors.white),
           Icon(Icons.person, size: 30, color: Colors.white),
         ],
@@ -96,45 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             _currentIndex = index;
           });
-          
-          Widget screen;
-          switch (index) {
-            case 0:
-              screen =  LocationScreen();
-              break;
-            case 1:
-              screen =  LocationScreen();
-              break;
-            case 2:
-              screen = const HomeWorkScreen();
-              break;
-            case 3:
-              screen = const NotificationScreen();
-              break;
-            case 4:
-              screen = const ProfileScreen();
-              break;
-            default:
-              return;
-          }
-
-          Navigator.pushReplacement(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => screen,
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                const begin = Offset(1.0, 0.0);
-                const end = Offset.zero;
-                const curve = Curves.easeInOut;
-                var tween = Tween(begin: begin, end: end).chain(
-                  CurveTween(curve: curve),
-                );
-                var offsetAnimation = animation.drive(tween);
-                return SlideTransition(position: offsetAnimation, child: child);
-              },
-              transitionDuration: const Duration(milliseconds: 300),
-            ),
-          );
         },
       ),
     );
@@ -146,25 +113,8 @@ class _HomeScreenState extends State<HomeScreen> {
       title: Text(title),
       onTap: () {
         Navigator.pop(context);
-        // Add navigation logic here if needed
+        // Additional navigation logic can go here if needed
       },
     );
-  }
-
-  Widget _buildCurrentScreen() {
-    switch (_currentIndex) {
-      case 0:
-        return const Center(child: Text('CarScreen'));
-      case 1:
-        return const Center(child: Text('List Screen'));
-      case 2:
-        return const Center(child: Text('Home Work Screen'));
-      case 3:
-        return const Center(child: Text('Notifications Screen'));
-      case 4:
-        return const Center(child: Text('Profile Screen'));
-      default:
-        return const Center(child: Text('CarScreen'));
-    }
   }
 }

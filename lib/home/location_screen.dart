@@ -4,9 +4,11 @@ import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_ti
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'base_screen.dart';
 
 class LocationScreen extends StatefulWidget {
-  const LocationScreen({super.key});
+  const LocationScreen({Key? key}) : super(key: key);
+
   @override
   LocationScreenState createState() => LocationScreenState();
 }
@@ -76,11 +78,6 @@ class LocationScreenState extends State<LocationScreen> {
         desiredAccuracy: LocationAccuracy.high,
       );
 
-      // Check if position is not null
-      if (position == null) {
-        throw Exception('Unable to retrieve location.');
-      }
-
       fromLocation = LatLng(position.latitude, position.longitude);
 
       List<Placemark> placemarks = await placemarkFromCoordinates(
@@ -92,7 +89,6 @@ class LocationScreenState extends State<LocationScreen> {
           ? "${placemarks[0].street}, ${placemarks[0].locality}"
           : "Location found, address unknown";
 
-      // Move the map to the current location if available
       if (fromLocation != null) {
         mapController.move(fromLocation!, 15);
       }
@@ -104,41 +100,7 @@ class LocationScreenState extends State<LocationScreen> {
     }
   }
 
-  Future<void> _searchLocation(String query) async {
-    setState(() => isLoading = true);
-    try {
-      List<Location> locations = await locationFromAddress(query);
-      if (locations.isNotEmpty) {
-        toLocation = LatLng(locations[0].latitude, locations[0].longitude);
-        toAddress = query;
-        if (toLocation != null) {
-          mapController.move(toLocation!, 15);
-        }
-      }
-    } catch (e) {
-      debugPrint('Error searching location: $e');
-      _showErrorDialog('Location not found');
-    }
-    setState(() => isLoading = false);
-  }
-
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Error'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showLocationSearch(BuildContext context) async {
+  Future<void> _showLocationSearch(BuildContext context) async {
     final result = await showSearch(
       context: context,
       delegate: LocationSearchDelegate(recentPlaces),
@@ -166,9 +128,26 @@ class LocationScreenState extends State<LocationScreen> {
     return 0.0;
   }
 
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseScreen(
+      currentIndex: 1, // Bottom navigation index for the Location screen
       body: Stack(
         children: [
           FlutterMap(
@@ -297,17 +276,17 @@ class LocationScreenState extends State<LocationScreen> {
                     ),
                     const SizedBox(height: 8),
                     ...recentPlaces.map((place) => ListTile(
-                      leading: Icon(Icons.history, color: Colors.grey[700]),
-                      title: Text(place['name']),
-                      subtitle: Text("${place['address']} • ${place['distance']} km"),
-                      onTap: () {
-                        setState(() {
-                          toLocation = place['latLng'];
-                          toAddress = place['address'];
-                          mapController.move(toLocation!, 15);
-                        });
-                      },
-                    )),
+                          leading: Icon(Icons.history, color: Colors.grey[700]),
+                          title: Text(place['name']),
+                          subtitle: Text("${place['address']} • ${place['distance']} km"),
+                          onTap: () {
+                            setState(() {
+                              toLocation = place['latLng'];
+                              toAddress = place['address'];
+                              mapController.move(toLocation!, 15);
+                            });
+                          },
+                        )),
                   ],
                 ),
               );
@@ -321,34 +300,59 @@ class LocationScreenState extends State<LocationScreen> {
   }
 }
 
-class LocationSearchDelegate extends SearchDelegate {
+class LocationSearchDelegate extends SearchDelegate<Map<String, dynamic>> {
   final List<Map<String, dynamic>> recentPlaces;
+
   LocationSearchDelegate(this.recentPlaces);
 
   @override
-  List<Widget> buildActions(BuildContext context) => [IconButton(icon: Icon(Icons.clear), onPressed: () => query = '')];
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () => query = '',
+      ),
+    ];
+  }
 
   @override
-  Widget buildLeading(BuildContext context) => IconButton(icon: Icon(Icons.arrow_back), onPressed: () => close(context, null));
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () => close(context, {}),
+    );
+  }
 
   @override
-  Widget buildResults(BuildContext context) => Container();
+  Widget buildResults(BuildContext context) {
+    return Container();
+  }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final results = query.isEmpty
+    final filteredResults = query.isEmpty
         ? recentPlaces
-        : recentPlaces.where((place) => place['name'].toLowerCase().contains(query.toLowerCase())).toList();
+        : recentPlaces.where((place) {
+            final name = place['name'].toString().toLowerCase();
+            return name.contains(query.toLowerCase());
+          }).toList();
 
-    return ListView(
-      children: results.map((place) {
+    return ListView.builder(
+      itemCount: filteredResults.length,
+      itemBuilder: (context, index) {
+        final place = filteredResults[index];
         return ListTile(
           title: Text(place['name']),
-          subtitle: Text("${place['address']} • ${place['distance']} km"),
-          onTap: () => close(context, place),
+          subtitle: Text(place['address']),
+          trailing: Text(
+            "${place['distance']} km",
+            style: const TextStyle(color: Colors.grey),
+          ),
+          onTap: () {
+            close(context, place);
+          },
         );
-      }).toList(),
-      
+      },
     );
   }
 }

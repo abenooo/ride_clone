@@ -1,4 +1,6 @@
-import 'package:alepha_digital_tracking/drawer/history_screen.dart';
+import 'package:alepha_digital_tracking/drawer/complain_screen.dart';
+
+import '/drawer/history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import '../home/wallet_screen.dart';
@@ -6,7 +8,6 @@ import '../home/location_screen.dart';
 import '../home/chat_screen.dart';
 import '../home/notifications_screen.dart';
 import '../home/profile_screen.dart';
-import '../drawer/history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -62,7 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 MaterialPageRoute(builder: (context) =>  HistoryScreen()),
               );
             }),
-            _buildDrawerItem(Icons.report, 'Complain', () {}),
+            _buildDrawerItem(Icons.report, 'Complain', () {
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => ComplainScreen()),
+              );
+            }),
             _buildDrawerItem(Icons.share, 'Referral', () {}),
             _buildDrawerItem(Icons.payment, 'Payment', () {}),
             const Padding(

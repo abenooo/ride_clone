@@ -15,28 +15,24 @@ class CarScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Text('Add Money'),
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: const BorderSide(color: Colors.green),
-                  ),
                 ),
+                child: const Text('Add Money'),
               ),
             ),
             Row(
               children: [
                 Expanded(
                   child: _buildBalanceCard(
-                    '\$500',
+                    'ETB 500',
                     'Available Balance',
                     const Color(0xFFE8F5F0),
                   ),
                 ),
                 Expanded(
                   child: _buildBalanceCard(
-                    '\$200',
+                    'ETB 200',
                     'Total Expend',
                     const Color(0xFFE8F5F0),
                   ),
@@ -69,11 +65,12 @@ class CarScreen extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                _buildTransactionItem('Welton', '09:20 am', -570.00),
-                _buildTransactionItem('Nathsam', '09:20 am', 570.00),
-                _buildTransactionItem('Welton', '09:20 am', -570.00),
-                _buildTransactionItem('Nathsam', '09:20 am', 570.00),
-                _buildTransactionItem('Nathsam', '09:20 am', 570.00),
+                _buildTransactionItem('Abenezer', '09:20 am', -570.00),
+                _buildTransactionItem('Kena', '09:20 am', 570.00),
+                _buildTransactionItem('Kasemase', '09:20 am', -570.00),
+                _buildTransactionItem('Mulisia', '09:20 am', 570.00),
+                _buildTransactionItem('Mohammed', '09:20 am', 570.00),
+                _buildTransactionItem('Joe', '09:20 am', 570.00),
               ],
             ),
           ],

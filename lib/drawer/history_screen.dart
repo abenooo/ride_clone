@@ -25,51 +25,51 @@ class _HistoryScreenState extends State<HistoryScreen>
 
   // Data for the tabs
   final List<Map<String, String>> completedEntries = [
-    {"name": "Nate", "car": "Mustang Shelby GT", "status": "Done"},
-    {"name": "Henry", "car": "Mustang Shelby GT", "status": "Done"},
-    {"name": "William", "car": "Mustang Shelby GT", "status": "Done"},
-    {"name": "Nate", "car": "Mustang Shelby GT", "status": "Done"},
-    {"name": "Henry", "car": "Mustang Shelby GT", "status": "Done"},
-    {"name": "William", "car": "Mustang Shelby GT", "status": "Done"},
-    {"name": "Henry", "car": "Mustang Shelby GT", "status": "Done"},
-    {"name": "William", "car": "Mustang Shelby GT", "status": "Done"},
+    {"name": "Abenezer", "car": "Mustang Shelby GT", "status": "Done"},
+    {"name": "Kena", "car": "Mustang Shelby GT", "status": "Done"},
+    {"name": "Mulisa", "car": "Mustang Shelby GT", "status": "Done"},
+    {"name": "Abenezer", "car": "Mustang Shelby GT", "status": "Done"},
+    {"name": "Kena", "car": "Mustang Shelby GT", "status": "Done"},
+    {"name": "Mulisa", "car": "Mustang Shelby GT", "status": "Done"},
+    {"name": "Kena", "car": "Mustang Shelby GT", "status": "Done"},
+    {"name": "Mulisa", "car": "Mustang Shelby GT", "status": "Done"},
   ];
 
   final List<Map<String, String>> cancelledEntries = [
-    {"name": "Nate", "car": "Mustang Shelby GT", "status": "Cancelled"},
-    {"name": "Henry", "car": "Mustang Shelby GT", "status": "Cancelled"},
-    {"name": "William", "car": "Mustang Shelby GT", "status": "Cancelled"},
-    {"name": "Nate", "car": "Mustang Shelby GT", "status": "Cancelled"},
-    {"name": "Henry", "car": "Mustang Shelby GT", "status": "Cancelled"},
-    {"name": "William", "car": "Mustang Shelby GT", "status": "Cancelled"},
-    {"name": "Henry", "car": "Mustang Shelby GT", "status": "Cancelled"},
-    {"name": "William", "car": "Mustang Shelby GT", "status": "Cancelled"},
+    {"name": "Abenezer", "car": "Mustang Shelby GT", "status": "Cancelled"},
+    {"name": "Kena", "car": "Mustang Shelby GT", "status": "Cancelled"},
+    {"name": "Mulisa", "car": "Mustang Shelby GT", "status": "Cancelled"},
+    {"name": "Abenezer", "car": "Mustang Shelby GT", "status": "Cancelled"},
+    {"name": "Kena", "car": "Mustang Shelby GT", "status": "Cancelled"},
+    {"name": "Mulisa", "car": "Mustang Shelby GT", "status": "Cancelled"},
+    {"name": "Kena", "car": "Mustang Shelby GT", "status": "Cancelled"},
+    {"name": "Mulisa", "car": "Mustang Shelby GT", "status": "Cancelled"},
   ];
 
   final List<Map<String, String>> upcomingEntries = [
-    {"name": "Nate", "car": "Mustang Shelby GT", "status": "Today at 09:20 am"},
+    {"name": "Abenezer", "car": "Mustang Shelby GT", "status": "Today at 09:20 am"},
+    {
+      "name": "Kena",
+      "car": "Mustang Shelby GT",
+      "status": "Today at 02:00 pm"
+    },
+    {
+      "name": "Mulisa",
+      "car": "Mustang Shelby GT",
+      "status": "Tomorrow at 11:30 am"
+    },
+    {"name": "Abenezer", "car": "Mustang Shelby GT", "status": "Today at 09:20 am"},
     {
       "name": "Henry",
       "car": "Mustang Shelby GT",
       "status": "Today at 02:00 pm"
     },
     {
-      "name": "William",
+      "name": "Mulisa",
       "car": "Mustang Shelby GT",
       "status": "Tomorrow at 11:30 am"
     },
-    {"name": "Nate", "car": "Mustang Shelby GT", "status": "Today at 09:20 am"},
-    {
-      "name": "Henry",
-      "car": "Mustang Shelby GT",
-      "status": "Today at 02:00 pm"
-    },
-    {
-      "name": "William",
-      "car": "Mustang Shelby GT",
-      "status": "Tomorrow at 11:30 am"
-    },
-    {"name": "Nate", "car": "Mustang Shelby GT", "status": "Today at 09:20 am"},
+    {"name": "Abenezer", "car": "Mustang Shelby GT", "status": "Today at 09:20 am"},
     {
       "name": "Henry",
       "car": "Mustang Shelby GT",
@@ -97,7 +97,9 @@ class _HistoryScreenState extends State<HistoryScreen>
         elevation: 1,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: const Text(
           "History",

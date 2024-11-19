@@ -1,3 +1,4 @@
+import 'package:alepha_digital_tracking/drawer/history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import '../home/wallet_screen.dart';
@@ -5,6 +6,7 @@ import '../home/location_screen.dart';
 import '../home/chat_screen.dart';
 import '../home/notifications_screen.dart';
 import '../home/profile_screen.dart';
+import '../drawer/history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -54,10 +56,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               decoration: BoxDecoration(color: Colors.green),
             ),
-            _buildDrawerItem(Icons.history, 'History'),
-            _buildDrawerItem(Icons.report, 'Complain'),
-            _buildDrawerItem(Icons.share, 'Referral'),
-            _buildDrawerItem(Icons.payment, 'Payment'),
+            _buildDrawerItem(Icons.history, 'History', () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  HistoryScreen()),
+              );
+            }),
+            _buildDrawerItem(Icons.report, 'Complain', () {}),
+            _buildDrawerItem(Icons.share, 'Referral', () {}),
+            _buildDrawerItem(Icons.payment, 'Payment', () {}),
             const Padding(
               padding: EdgeInsets.all(14.0),
               child: Text(
@@ -65,9 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            _buildDrawerItem(Icons.settings, 'Profile Settings'),
-            _buildDrawerItem(Icons.support, 'Help and Support'),
-            _buildDrawerItem(Icons.logout, 'Logout'),
+            _buildDrawerItem(Icons.settings, 'Profile Settings', () {}),
+            _buildDrawerItem(Icons.support, 'Help and Support', () {}),
+            _buildDrawerItem(Icons.logout, 'Logout', () {}),
           ],
         ),
       ),
@@ -107,13 +114,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildDrawerItem(IconData icon, String title) {
+  Widget _buildDrawerItem(IconData icon, String title, VoidCallback onTap) {
     return ListTile(
       leading: Icon(icon, color: Colors.black),
       title: Text(title),
       onTap: () {
         Navigator.pop(context);
-        // Additional navigation logic can go here if needed
+        onTap(); // Call the provided onTap function
       },
     );
   }

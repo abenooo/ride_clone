@@ -11,17 +11,29 @@ class CarScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 50),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8), // Rounded corners
+                        side: const BorderSide(color: Colors.green), // Border color
+                      ),
+                      minimumSize: const Size(double.infinity, 50), // Minimum size updated to half
+                    ),
+                    child: const Text('Add Money', style: TextStyle(fontSize: 16)),
+                    ),
+                  ),
                 ),
-                child: const Text('Add Money'),
-              ),
+              ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: _buildBalanceCard(

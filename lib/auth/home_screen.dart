@@ -1,6 +1,7 @@
 import 'package:alepha_digital_tracking/drawer/complain_screen.dart';
 
 import '/drawer/history_screen.dart';
+import '/drawer/favourit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import '../home/wallet_screen.dart';
@@ -69,7 +70,11 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }),
             _buildDrawerItem(Icons.share, 'Referral', () {}),
-            _buildDrawerItem(Icons.payment, 'Payment', () {}),
+            _buildDrawerItem(Icons.favorite, 'Favourite', () {
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => FavouriteList()),
+              );
+            }),
             const Padding(
               padding: EdgeInsets.all(14.0),
               child: Text(

@@ -42,7 +42,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
                 filled: true,
-                // fillColor: Colors.grey[200],
+                fillColor: Colors.white,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide.none,
